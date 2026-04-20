@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronDown, HelpCircle, MessageSquare, ShieldQuestion } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const faqData = [
   {
@@ -56,16 +57,20 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30 pb-20">
       
-      {/* HEADER */}
-      <header className="relative pt-32 pb-16 px-6">
+      {/* GLOBAL NAVIGATION */}
+      <Navbar />
+
+      {/* HEADER - Adjusted padding for fixed Navbar */}
+      <header className="relative pt-40 pb-16 px-6">
         <div className="mx-auto max-w-7xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors">
-            <ChevronLeft size={14} /> Back to Home
+          <Link href="/" className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors">
+            <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            Back to Home
           </Link>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
             Information <span className="text-emerald-500">Center</span>
           </h1>
-          <p className="mt-4 max-w-xl text-zinc-400">
+          <p className="mt-4 max-w-xl text-zinc-400 font-medium leading-relaxed">
             Commonly asked questions regarding the ATMJOIN enlistment process and service requirements.
           </p>
         </div>
@@ -116,7 +121,7 @@ export default function FAQPage() {
                           isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                         }`}
                       >
-                        <div className="p-5 pt-0 text-sm text-zinc-400 leading-relaxed border-t border-white/5">
+                        <div className="p-5 pt-0 text-sm text-zinc-400 font-medium leading-relaxed border-t border-white/5">
                           {item.a}
                         </div>
                       </div>
@@ -129,24 +134,24 @@ export default function FAQPage() {
         </div>
 
         {/* SUPPORT TICKET CTA */}
-        <div className="mt-20 p-8 rounded-[2rem] bg-zinc-900 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-20 p-8 rounded-[2rem] bg-zinc-900 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:border-emerald-500/20">
           <div className="flex items-center gap-4">
             <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
               <MessageSquare size={24} />
             </div>
             <div>
               <h3 className="text-lg font-bold uppercase">Still have questions?</h3>
-              <p className="text-xs text-zinc-500">Our support command is available 24/7 to assist you.</p>
+              <p className="text-xs text-zinc-500 font-medium">Our support command is available 24/7 to assist you.</p>
             </div>
           </div>
-          <button className="h-11 px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-emerald-400 transition-all">
+          <button className="h-11 px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-emerald-400 transition-all hover:scale-105 active:scale-95">
             Contact Support
           </button>
         </div>
       </main>
 
       {/* FOOTER BADGES */}
-      <div className="mt-20 flex justify-center gap-10 opacity-20 grayscale">
+      <div className="mt-20 flex justify-center gap-10 opacity-20 grayscale pb-10">
         <div className="flex items-center gap-2">
           <HelpCircle size={14} />
           <span className="text-[9px] font-bold uppercase tracking-widest">Help Desk</span>

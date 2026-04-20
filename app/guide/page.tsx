@@ -7,6 +7,7 @@ import {
   Stethoscope, ShieldAlert, GraduationCap, 
   MapPin, ArrowRight 
 } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const steps = [
   {
@@ -50,17 +51,21 @@ export default function GuidePage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30 pb-20">
       
-      {/* HEADER */}
-      <header className="relative pt-32 pb-16 px-6">
-        <div className="absolute inset-0 z-0 opacity-10 bg-[url('/military.png')] bg-cover bg-fixed grayscale" />
+      {/* GLOBAL NAVIGATION */}
+      <Navbar />
+
+      {/* HEADER - Adjusted padding for fixed Navbar */}
+      <header className="relative pt-44 pb-16 px-6">
+        <div className="absolute inset-0 z-0 opacity-10 bg-[url('/military.png')] bg-cover bg-fixed grayscale pointer-events-none" />
         <div className="relative z-10 mx-auto max-w-7xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors">
-            <ChevronLeft size={14} /> Back to Home
+          <Link href="/" className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors">
+            <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            Back to Home
           </Link>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-            Enlistment <span className="text-emerald-500 text-outline">Roadmap</span>
+            Enlistment <span className="text-emerald-500">Roadmap</span>
           </h1>
-          <p className="mt-4 max-w-xl text-zinc-400">
+          <p className="mt-4 max-w-xl text-zinc-400 font-medium">
             A comprehensive guide to the transition from civilian to military personnel. 
             Follow these phases to ensure a successful application.
           </p>
@@ -80,7 +85,7 @@ export default function GuidePage() {
               </div>
 
               {/* Content Card */}
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-3xl bg-zinc-900 border border-white/5 transition-all group-hover:border-emerald-500/30">
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-3xl bg-zinc-900 border border-white/5 transition-all group-hover:border-emerald-500/30 group-hover:bg-zinc-900/80">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-black text-emerald-500 tracking-[0.3em]">{step.phase}</span>
                   <div className="h-px flex-1 mx-4 bg-white/5" />
@@ -89,7 +94,7 @@ export default function GuidePage() {
                 <h3 className="text-xl font-bold uppercase mb-2 group-hover:text-emerald-400 transition-colors">
                   {step.title}
                 </h3>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-6">
+                <p className="text-zinc-500 text-sm leading-relaxed mb-6 font-medium">
                   {step.desc}
                 </p>
 
@@ -98,7 +103,7 @@ export default function GuidePage() {
                   <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500 block mb-3">Key Requirements</span>
                   <div className="flex flex-wrap gap-2">
                     {step.requirements.map((req, rIdx) => (
-                      <span key={rIdx} className="text-[10px] font-bold px-2 py-1 bg-white/5 border border-white/5 rounded-md text-zinc-300">
+                      <span key={rIdx} className="text-[10px] font-bold px-2 py-1 bg-white/5 border border-white/5 rounded-md text-zinc-300 transition-colors group-hover:border-emerald-500/20">
                         {req}
                       </span>
                     ))}
@@ -114,13 +119,13 @@ export default function GuidePage() {
         <div className="mt-24 p-1 rounded-[3rem] bg-gradient-to-b from-white/10 to-transparent">
           <div className="bg-zinc-950 rounded-[2.9rem] p-12 text-center border border-white/5">
             <h2 className="text-2xl font-bold uppercase mb-4">Ready to initialize?</h2>
-            <p className="text-zinc-500 text-sm mb-8 max-w-sm mx-auto">
+            <p className="text-zinc-500 text-sm mb-8 max-w-sm mx-auto font-medium">
               Start your Phase 01 registration today. Your future career is one click away.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 href="/signup" 
-                className="flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-emerald-400 transition-all"
+                className="flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-emerald-400 transition-all hover:scale-105 active:scale-95"
               >
                 Begin Registration <ArrowRight size={14} />
               </Link>
@@ -136,7 +141,7 @@ export default function GuidePage() {
       </main>
 
       {/* FOOTER INFO */}
-      <div className="mt-20 text-center opacity-20">
+      <div className="mt-20 text-center opacity-20 pb-10">
         <div className="flex items-center justify-center gap-2 mb-2">
             <MapPin size={12} />
             <span className="text-[9px] font-bold uppercase tracking-[0.3em]">Global Enlistment Network</span>

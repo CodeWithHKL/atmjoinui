@@ -1,85 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronRight, Shield, Target, Users, ArrowRight } from "lucide-react";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Careers", href: "/careers" },
-  { name: "Compare Branches", href: "/compare" },
-  { name: "Find Your Fit", href: "/quiz" },
-  { name: "Guide", href: "/guide" },
-  { name: "FAQ", href: "/faq" },
-];
+import { ChevronRight, Shield, Target, Users, ArrowRight } from "lucide-react";
+import Navbar from "@/components/Navbar"; // Ensure your folder path matches
 
 export default function VisitorLanding() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30">
       
-      {/* NAVIGATION BAR */}
-      <nav className="fixed top-0 z-50 w-full px-4 py-6 transition-all duration-300">
-        <div className={`mx-auto max-w-7xl rounded-2xl border border-white/10 transition-all duration-300 ${
-          scrolled ? "bg-black/60 backdrop-blur-md py-3 shadow-lg" : "bg-white/5 backdrop-blur-sm py-4"
-        }`}>
-          <div className="flex items-center justify-between px-6">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/atmjoin-logo.png" alt="Logo" className="h-8 w-auto" />
-              <span className="text-sm font-black uppercase tracking-tighter">ATMJOIN</span>
-            </Link>
-
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors">
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-
-            <div className="hidden lg:block">
-              <Link href="/login" className="rounded-xl bg-white px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-black transition-all hover:bg-zinc-200">
-                Login
-              </Link>
-            </div>
-
-            {/* Mobile Toggle */}
-            <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 mt-2 w-full p-4 animate-in fade-in slide-in-from-top-4">
-            <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/95 p-6 backdrop-blur-xl">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} onClick={() => setIsMenuOpen(false)} className="text-xs font-bold uppercase tracking-widest text-zinc-300">
-                  {link.name}
-                </Link>
-              ))}
-              <hr className="border-white/10" />
-              <Link href="/login" className="flex h-12 items-center justify-center rounded-xl bg-white text-xs font-black uppercase text-black">
-                Login
-              </Link>
-            </div>
-          </div>
-        )}
-      </nav>
+      <Navbar />
 
       {/* HERO SECTION */}
       <section className="relative flex min-h-screen items-center justify-center pt-20 overflow-hidden">
-        {/* Background Image with Parallax-like effect */}
+        {/* Background Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat scale-105"
           style={{ backgroundImage: "url('/military.png')" }}

@@ -4,8 +4,9 @@ import React from "react";
 import Link from "next/link";
 import { 
   ChevronLeft, Shield, Anchor, Wind, 
-  Map, HardHat, Zap, Check 
+  Map, HardHat, Zap 
 } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const branches = [
   {
@@ -44,16 +45,20 @@ export default function ComparePage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30 pb-20">
       
-      {/* HEADER */}
-      <header className="relative pt-32 pb-16 px-6">
+      {/* GLOBAL NAVIGATION */}
+      <Navbar />
+
+      {/* HEADER - Adjusted padding-top to account for fixed Navbar */}
+      <header className="relative pt-40 pb-16 px-6">
         <div className="mx-auto max-w-7xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors">
-            <ChevronLeft size={14} /> Back to Home
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white mb-8 transition-colors group">
+            <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            Back to Home
           </Link>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
             Branch <span className="text-emerald-500">Comparison</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-zinc-400">
+          <p className="mt-4 max-w-2xl text-zinc-400 font-medium">
             Every branch offers unique challenges and rewards. Analyze the core differences to find where you belong in the unified command structure.
           </p>
         </div>
@@ -63,7 +68,7 @@ export default function ComparePage() {
       <main className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {branches.map((branch) => (
-            <div key={branch.name} className="relative overflow-hidden p-8 rounded-[2.5rem] bg-zinc-900 border border-white/5">
+            <div key={branch.name} className="relative overflow-hidden p-8 rounded-[2.5rem] bg-zinc-900 border border-white/5 hover:border-white/10 transition-colors">
               <div className={`h-14 w-14 rounded-2xl ${branch.bg} flex items-center justify-center ${branch.theme} mb-6`}>
                 <branch.icon size={28} />
               </div>
@@ -123,13 +128,13 @@ export default function ComparePage() {
         {/* CTA SECTION */}
         <div className="mt-16 flex flex-col items-center text-center p-12 rounded-[2.5rem] border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm">
           <h2 className="text-2xl font-bold uppercase mb-4">Still Undecided?</h2>
-          <p className="text-zinc-400 max-w-lg mb-8 text-sm">
+          <p className="text-zinc-400 max-w-lg mb-8 text-sm font-medium">
             Our eligibility checker takes your physical attributes and education background to rank which branch offers you the best career trajectory.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link 
               href="/quiz" 
-              className="flex h-12 items-center px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-zinc-200 transition-all"
+              className="flex h-12 items-center px-8 rounded-xl bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-zinc-200 transition-all hover:scale-105 active:scale-95"
             >
               Start Fit Quiz
             </Link>

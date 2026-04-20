@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -16,8 +17,8 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
-  // Add scroll effect for the floating glass feel
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -31,7 +32,6 @@ export default function Navbar() {
       }`}>
         <div className="flex items-center justify-between px-6">
           
-          {/* Logo Section */}
           <Link href="/" className="flex items-center gap-2">
             <img src="/atmjoin-logo.png" alt="Logo" className="h-8 w-auto" />
             <span className="text-sm font-black uppercase tracking-tighter text-white">ATMJOIN</span>
@@ -39,18 +39,25 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-[11px] font-bold uppercase tracking-widest text-zinc-300 hover:text-white transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`relative text-[11px] font-bold uppercase tracking-widest transition-colors hover:text-white ${
+                    isActive ? "text-emerald-400" : "text-zinc-400"
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-emerald-400 animate-in fade-in zoom-in duration-300" />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Action Button (Desktop) */}
           <div className="hidden lg:block">
             <Link 
               href="/login"
@@ -60,7 +67,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button 
             className="lg:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
@@ -72,17 +78,22 @@ export default function Navbar() {
         {/* Mobile Menu Overlay */}
         {isOpen && (
           <div className="lg:hidden absolute top-full left-0 mt-2 w-full animate-in fade-in slide-in-from-top-4">
-            <div className="mx-4 flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/90 p-6 backdrop-blur-xl">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm font-bold uppercase tracking-widest text-zinc-300 hover:text-white"
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <div className="mx-4 flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/95 p-6 backdrop-blur-xl">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`text-sm font-bold uppercase tracking-widest transition-colors ${
+                      isActive ? "text-emerald-400" : "text-zinc-300"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <hr className="border-white/10" />
               <Link 
                 href="/login"
