@@ -25,7 +25,7 @@ export default function Home() {
         {/* Header Section */}
         <div className="flex flex-col items-center gap-3 text-center">
           {/* Logo Container - Background removed */}
-          <div className="flex h-16 w-16 items-center justify-center bg-transparent">
+          <div className="flex h-24 w-24 items-center justify-center bg-transparent">
             <img 
               src="/atmjoin-logo.png" 
               alt="ATMJOIN Logo" 
@@ -37,7 +37,7 @@ export default function Home() {
               Recruitment Portal
             </h1>
             <p className="mt-2 text-[10px] text-zinc-300 uppercase tracking-[0.3em] font-bold">
-              Unified Military Command
+              Unified Military Branches
             </p>
           </div>
         </div>
