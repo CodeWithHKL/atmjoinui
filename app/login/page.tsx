@@ -1,0 +1,93 @@
+import React from "react";
+
+export default function Home() {
+  return (
+    <div 
+      className="relative flex min-h-screen flex-col items-center justify-center bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 p-4 overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/military.png')" }} // Ensure the path to your image is correct
+    >
+      
+      {/* Dark Overlay to ensure glass readability */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
+
+      {/* Dynamic Background Accents (Kept for extra depth) */}
+      <div className="absolute top-[-5%] right-[-5%] h-[45%] w-[45%] rounded-full bg-white/5 blur-[100px] z-0" />
+      <div className="absolute bottom-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-500/10 blur-[120px] z-0" />
+
+      {/* Main Glass Container */}
+      <main className="relative z-10 flex w-full max-w-[420px] flex-col gap-8 rounded-[2.5rem] border border-white/20 bg-white/10 p-10 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-black/40">
+        
+        {/* Header Section */}
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-lg">
+            <span className="text-black font-black text-xl tracking-tighter">UM</span>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-white uppercase leading-none">
+              Recruitment Portal
+            </h1>
+            <p className="mt-2 text-[10px] text-zinc-300 uppercase tracking-[0.3em] font-bold">
+              Unified Military Command
+            </p>
+          </div>
+        </div>
+
+        {/* Login Form */}
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-1.5">
+            <label className="ml-1 text-[11px] font-bold uppercase tracking-wider text-zinc-300">
+              Email
+            </label>
+            <input 
+              type="text" 
+              placeholder="Enter your email"
+              className="h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 text-sm text-white outline-none focus:ring-2 focus:ring-white/20 transition-all placeholder:text-zinc-500"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <div className="flex justify-between items-center">
+              <label className="ml-1 text-[11px] font-bold uppercase tracking-wider text-zinc-300">
+                Password
+              </label>
+              <a href="#" className="mr-1 text-[10px] uppercase font-bold text-zinc-400 hover:text-white transition-colors">
+                Forgot?
+              </a>
+            </div>
+            <input 
+              type="password" 
+              placeholder="••••••••"
+              className="h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 text-sm text-white outline-none focus:ring-2 focus:ring-white/20 transition-all placeholder:text-zinc-500"
+            />
+          </div>
+
+          <button className="mt-2 flex h-12 items-center justify-center rounded-2xl bg-white text-xs font-black uppercase tracking-[0.2em] text-black shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:bg-zinc-200">
+            Log In
+          </button>
+        </div>
+
+        {/* Footer Links */}
+        <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
+          <p className="text-center text-[10px] leading-relaxed text-zinc-400 font-medium">
+            System access is monitored. Unauthorized entry is prohibited under military code.
+          </p>
+          <div className="flex justify-center gap-6">
+            <a href="#" className="text-[11px] font-bold uppercase tracking-wider text-white hover:opacity-70">
+              Create Account
+            </a>
+            <a href="#" className="text-[11px] font-bold uppercase tracking-wider text-white hover:opacity-70">
+              Help Desk
+            </a>
+          </div>
+        </div>
+      </main>
+
+      {/* Version Tag */}
+      <footer className="relative z-10 mt-8 flex flex-col items-center gap-1 opacity-60">
+        <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-400">
+          v4.0.2-SECURE // NODES: 12-B
+        </span>
+      </footer>
+    </div>
+  );
+}
