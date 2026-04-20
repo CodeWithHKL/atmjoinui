@@ -11,7 +11,7 @@ export default function Home() {
 
   const handleLogin = () => {
     // Add login logic here if needed
-    router.push("/");
+    router.push("/loggedin");
   };
 
   return (
