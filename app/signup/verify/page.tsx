@@ -39,7 +39,7 @@ export default function VerifyOTP() {
   return (
     <div 
       className="relative flex min-h-screen flex-col items-center justify-center bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 p-4 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/signup-bg.png')" }}
+      style={{ backgroundImage: "url('/military.png')" }}
     >
       <div className="absolute inset-0 bg-black/60 z-0" />
 

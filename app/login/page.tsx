@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div 
       className="relative flex min-h-screen flex-col items-center justify-center bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 p-4 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/military.png')" }}
+      style={{ backgroundImage: "url('/signup-bg.png')" }}
     >
       
       {/* Dark Overlay */}
