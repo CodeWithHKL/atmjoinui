@@ -1,144 +1,190 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Menu, X, ChevronRight, Shield, Target, Users, ArrowRight } from "lucide-react";
 
-export default function Dashboard() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Careers", href: "/careers" },
+  { name: "Compare Branches", href: "/compare" },
+  { name: "Find Your Fit", href: "/quiz" },
+  { name: "Guide", href: "/guide" },
+  { name: "FAQ", href: "/faq" },
+];
 
-  // Logic to handle auto-hide on scroll
+export default function VisitorLanding() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const controlNavbar = () => {
-      if (typeof window !== 'undefined') {
-        // If scrolling down, hide; if scrolling up, show.
-        if (window.scrollY > lastScrollY && window.scrollY > 100) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
-        setLastScrollY(window.scrollY);
-      }
-    };
-
-    window.addEventListener('scroll', controlNavbar);
-    return () => window.removeEventListener('scroll', controlNavbar);
-  }, [lastScrollY]);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="relative min-h-[200vh] bg-zinc-50 font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 transition-colors duration-500">
+    <div className="relative min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30">
       
-      {/* Background HUD Accents */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-zinc-500/10 blur-[120px]" />
-      </div>
+      {/* NAVIGATION BAR */}
+      <nav className="fixed top-0 z-50 w-full px-4 py-6 transition-all duration-300">
+        <div className={`mx-auto max-w-7xl rounded-2xl border border-white/10 transition-all duration-300 ${
+          scrolled ? "bg-black/60 backdrop-blur-md py-3 shadow-lg" : "bg-white/5 backdrop-blur-sm py-4"
+        }`}>
+          <div className="flex items-center justify-between px-6">
+            <Link href="/" className="flex items-center gap-2">
+              <img src="/atmjoin-logo.png" alt="Logo" className="h-8 w-auto" />
+              <span className="text-sm font-black uppercase tracking-tighter">ATMJOIN</span>
+            </Link>
 
-      {/* MODERN FLOATING COMMAND BAR */}
-      <nav 
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1100px] transition-all duration-500 ease-in-out ${
-          isVisible ? "translate-y-0 opacity-100" : "-translate-y-24 opacity-0"
-        }`}
-      >
-        <div className="flex items-center justify-between rounded-full border border-white/40 bg-white/70 p-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-zinc-700/30 dark:bg-zinc-900/60">
-          
-          {/* Logo & System ID */}
-          <div className="flex items-center gap-3 pl-4">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black dark:bg-white text-white dark:text-black font-black text-[10px] tracking-tighter">
-              UM
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link key={link.name} href={link.href} className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors">
+                  {link.name}
+                </Link>
+              ))}
             </div>
-            <div className="hidden sm:block">
-              <p className="text-[10px] font-bold uppercase tracking-widest leading-none">Command Center</p>
-              <p className="font-mono text-[8px] text-zinc-500 uppercase">Secure Node: 12-B</p>
+
+            <div className="hidden lg:block">
+              <Link href="/login" className="rounded-xl bg-white px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-black transition-all hover:bg-zinc-200">
+                Login
+              </Link>
             </div>
-          </div>
 
-          {/* Navigation Items - Pill Style */}
-          <div className="flex items-center gap-1">
-            {['Overview', 'Ops', 'Intel', 'Fleet'].map((item) => (
-              <a 
-                key={item} 
-                href="#" 
-                className="px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider text-zinc-500 hover:text-black hover:bg-black/5 dark:hover:text-white dark:hover:bg-white/5 transition-all"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* Profile & Quick Actions */}
-          <div className="flex items-center gap-2 pr-1">
-            <button className="hidden md:flex h-9 w-9 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-              <span className="text-lg">⊕</span>
+            {/* Mobile Toggle */}
+            <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <div className="flex items-center gap-3 rounded-full bg-black/5 dark:bg-white/5 pl-4 pr-1 py-1 border border-black/5 dark:border-white/5">
-              <span className="hidden lg:block text-[10px] font-bold uppercase tracking-tight">Cdt. Henderson</span>
-              <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-zinc-400 to-zinc-200 dark:from-zinc-700 dark:to-zinc-500 shadow-inner" />
-            </div>
           </div>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 mt-2 w-full p-4 animate-in fade-in slide-in-from-top-4">
+            <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/95 p-6 backdrop-blur-xl">
+              {navLinks.map((link) => (
+                <Link key={link.name} href={link.href} onClick={() => setIsMenuOpen(false)} className="text-xs font-bold uppercase tracking-widest text-zinc-300">
+                  {link.name}
+                </Link>
+              ))}
+              <hr className="border-white/10" />
+              <Link href="/login" className="flex h-12 items-center justify-center rounded-xl bg-white text-xs font-black uppercase text-black">
+                Login
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* Dashboard Content Container */}
-      <main className="relative z-10 pt-32 pb-20 px-6 mx-auto max-w-7xl">
-        
-        {/* Header Hero Area */}
-        <header className="mb-12">
-          <h2 className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-blue-600 dark:text-blue-400 mb-2">
-            System Dashboard // Deployment Status
-          </h2>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            Welcome back, <span className="text-zinc-400 italic">Personnel.</span>
+      {/* HERO SECTION */}
+      <section className="relative flex min-h-screen items-center justify-center pt-20 overflow-hidden">
+        {/* Background Image with Parallax-like effect */}
+        <div 
+          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat scale-105"
+          style={{ backgroundImage: "url('/military.png')" }}
+        />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-zinc-950/80 to-zinc-950" />
+
+        <div className="relative z-20 mx-auto max-w-5xl px-6 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400">Recruitment 2026 Now Open</span>
+          </div>
+
+          <h1 className="mb-6 text-5xl font-black uppercase tracking-tighter md:text-7xl lg:text-8xl">
+            Defend the <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">Future.</span>
           </h1>
-        </header>
+          
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-zinc-400 font-medium leading-relaxed">
+            Join the elite ranks of the Unified Military Command. Explore specialized career paths, 
+            test your eligibility, and start your journey toward serving the nation.
+          </p>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Main Card */}
-          <section className="lg:col-span-8 rounded-[2.5rem] border border-white/40 bg-white/60 p-10 backdrop-blur-xl dark:border-zinc-700/30 dark:bg-zinc-900/40 shadow-xl">
-            <div className="flex justify-between items-start mb-10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/signup" className="group flex h-14 w-full sm:w-auto items-center justify-center gap-3 rounded-2xl bg-white px-8 text-sm font-black uppercase tracking-widest text-black transition-all hover:bg-emerald-400 hover:scale-105 active:scale-95">
+              Begin Enlistment
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link href="/careers" className="flex h-14 w-full sm:w-auto items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-8 text-sm font-black uppercase tracking-widest text-white backdrop-blur-md transition-all hover:bg-white/10">
+              View Careers
+            </Link>
+          </div>
+        </div>
+
+        {/* Floating Stats Bar */}
+        <div className="absolute bottom-12 z-20 w-full px-6 hidden md:block">
+          <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-black/40 p-8 backdrop-blur-xl">
+            <div className="grid grid-cols-3 gap-8 text-center">
               <div>
-                <h3 className="text-lg font-bold">Recruitment Progress</h3>
-                <p className="text-sm text-zinc-500 font-medium">Stage 3: Advanced Tactical Evaluation</p>
+                <div className="text-2xl font-black text-white">250+</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Specialized Roles</div>
               </div>
-              <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="border-x border-white/10">
+                <div className="text-2xl font-black text-white">100%</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Digital Processing</div>
+              </div>
+              <div>
+                <div className="text-2xl font-black text-white">24/7</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Command Support</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* QUICK ACTIONS SECTION */}
+      <section className="relative z-20 py-24 px-6 bg-zinc-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            {/* Visual Progress Hud */}
-            <div className="space-y-4">
-              <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-zinc-400">
-                <span>Verification</span>
-                <span>88% Complete</span>
+            <div className="group p-8 rounded-[2.5rem] bg-zinc-900 border border-white/5 hover:border-emerald-500/30 transition-all cursor-pointer">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-6">
+                <Target size={24} />
               </div>
-              <div className="h-1.5 w-full bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-                <div className="h-full w-[88%] bg-black dark:bg-white rounded-full" />
-              </div>
+              <h3 className="text-xl font-bold uppercase mb-3">Find Your Fit</h3>
+              <p className="text-zinc-500 text-sm mb-6">Take our personality and skills assessment to find the branch that matches your profile.</p>
+              <ArrowRight className="text-emerald-500 group-hover:translate-x-2 transition-transform" />
             </div>
-          </section>
 
-          {/* Sidebar Card */}
-          <section className="lg:col-span-4 rounded-[2.5rem] border border-white/40 bg-black p-10 shadow-2xl dark:bg-white text-white dark:text-black">
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60 mb-6">Quick Directives</h3>
-            <ul className="space-y-6">
-              {['Launch VR Sim', 'Review Dossier', 'Contact Command'].map((task) => (
-                <li key={task} className="flex items-center justify-between group cursor-pointer">
-                  <span className="text-sm font-bold tracking-tight">{task}</span>
-                  <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main>
+            <div className="group p-8 rounded-[2.5rem] bg-zinc-900 border border-white/5 hover:border-emerald-500/30 transition-all cursor-pointer">
+              <div className="h-12 w-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6">
+                <Shield size={24} />
+              </div>
+              <h3 className="text-xl font-bold uppercase mb-3">Compare Branches</h3>
+              <p className="text-zinc-500 text-sm mb-6">Analyze benefits, requirements, and life in the Army, Navy, Air Force, and more.</p>
+              <ArrowRight className="text-blue-500 group-hover:translate-x-2 transition-transform" />
+            </div>
 
-      {/* Fixed HUD Corner (Bottom Right) */}
-      <div className="fixed bottom-8 right-8 z-40 opacity-40 hover:opacity-100 transition-opacity">
-        <div className="font-mono text-[10px] text-right uppercase tracking-tighter">
-          <p>Local Time: 17:40:12</p>
-          <p>Encrypted: AES-256</p>
-          <p className="text-blue-500">Connection: Stable</p>
+            <div className="group p-8 rounded-[2.5rem] bg-zinc-900 border border-white/5 hover:border-emerald-500/30 transition-all cursor-pointer">
+              <div className="h-12 w-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6">
+                <Users size={24} />
+              </div>
+              <h3 className="text-xl font-bold uppercase mb-3">Enlistment Guide</h3>
+              <p className="text-zinc-500 text-sm mb-6">Step-by-step instructions on the documentation and physical requirements needed.</p>
+              <ArrowRight className="text-purple-500 group-hover:translate-x-2 transition-transform" />
+            </div>
+
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="relative z-20 py-12 px-6 border-t border-white/5">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-3">
+            <img src="/atmjoin-logo.png" alt="Logo" className="h-6 w-auto opacity-50" />
+            <span className="text-xs font-bold text-zinc-600 uppercase tracking-widest">© 2026 ATMJOIN. All Rights Reserved.</span>
+          </div>
+          <div className="flex gap-8">
+            <a href="#" className="text-[10px] font-bold uppercase text-zinc-500 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="text-[10px] font-bold uppercase text-zinc-500 hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
