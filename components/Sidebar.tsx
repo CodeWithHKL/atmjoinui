@@ -9,6 +9,11 @@ import {
   PanelLeftClose, PanelLeftOpen, Menu, X 
 } from "lucide-react";
 
+interface SidebarProps {
+  isCollapsed: boolean;
+  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/loggedin" },
   { 
@@ -44,8 +49,7 @@ const menuItems = [
   { name: "Settings", icon: Settings, href: "/loggedin/settings" },
 ];
 
-export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const pathname = usePathname();
@@ -77,10 +81,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* MOBILE HEADER / HAMBURGER TRIGGER */}
+      {/* MOBILE HEADER */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 h-16 bg-zinc-950/80 backdrop-blur-xl border-b border-white/5">
         <div className="flex items-center gap-3">
-          <img src="/atmjoin-logo.png" alt="Logo" className="h-6 w-6" />
+          <img src="/atmjoin-logo.png" alt="Logo" className="h-6 w-6 object-contain" />
           <span className="font-black text-white uppercase tracking-tighter text-sm">ATMJOIN</span>
         </div>
         <button 
@@ -102,10 +106,8 @@ export default function Sidebar() {
       {/* SIDEBAR */}
       <aside 
         className={`fixed z-50 transition-all duration-500 ease-in-out flex flex-col border border-white/10 bg-zinc-950/80 backdrop-blur-xl shadow-2xl 
-          /* Mobile Positioning */
           top-20 bottom-4 left-4 right-4 lg:right-auto 
           ${isMobileOpen ? "translate-x-0 opacity-100" : "-translate-x-[110%] lg:translate-x-0 opacity-0 lg:opacity-100"}
-          /* Desktop Positioning */
           lg:top-4 lg:bottom-4 lg:left-4 lg:rounded-[2.5rem]
           ${isCollapsed ? "lg:w-20" : "lg:w-64"}
           rounded-[2rem]
@@ -114,12 +116,12 @@ export default function Sidebar() {
         {/* DESKTOP COLLAPSE TOGGLE */}
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="hidden lg:flex absolute -right-3 top-10 h-6 w-6 rounded-full border border-white/10 bg-zinc-900 text-zinc-400 hover:text-white items-center justify-center transition-all"
+          className="hidden lg:flex absolute -right-3 top-10 h-6 w-6 rounded-full border border-white/10 bg-zinc-900 text-zinc-400 hover:text-white items-center justify-center transition-all z-[60]"
         >
           {isCollapsed ? <PanelLeftOpen size={12} /> : <PanelLeftClose size={12} />}
         </button>
 
-        {/* BRAND (Hidden on mobile as it's in the mobile header) */}
+        {/* BRAND AREA */}
         <div className={`hidden lg:flex items-center gap-3 px-6 mb-10 mt-8 overflow-hidden transition-all duration-500 ${isCollapsed ? "justify-center px-0" : ""}`}>
           <img src="/atmjoin-logo.png" alt="Logo" className="h-8 w-8 min-w-[32px] object-contain" />
           {!isCollapsed && (
@@ -130,10 +132,10 @@ export default function Sidebar() {
         </div>
 
         {/* NAV ITEMS */}
-        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-6 lg:py-0 custom-scrollbar">
+        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-6 lg:py-0 no-scrollbar">
           {menuItems.map((item) => {
             const isActiveParent = item.subItems?.some(sub => pathname === sub.href) || 
-                                 (item.rootPath && pathname.startsWith(item.rootPath));
+                                   (item.rootPath && pathname.startsWith(item.rootPath));
             const isDirectActive = pathname === item.href;
 
             return (
@@ -156,7 +158,6 @@ export default function Sidebar() {
                       <ChevronDown size={14} className={`transition-transform duration-300 ${openMenus.includes(item.name) ? "rotate-180" : ""} ${isCollapsed ? "lg:hidden" : "block"}`} />
                     </button>
                     
-                    {/* SUBMENU */}
                     {(!isCollapsed || isMobileOpen) && openMenus.includes(item.name) && (
                       <div className="mt-1 ml-4 flex flex-col gap-1 border-l border-white/10 pl-6 animate-in slide-in-from-top-2 duration-300">
                         {item.subItems.map(sub => (
